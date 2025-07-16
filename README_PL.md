@@ -49,8 +49,8 @@ vinted-gender-classifier/
 ## ▶️ Jak uruchomić projekt lokalnie
 
 ### 1. Klonuj repozytorium
-git clone https://github.com/twoj-login/vinted-gender-classifier.git
-cd vinted-gender-classifier
+git clone https://github.com/pevu97/Vinted-Gender-Classifier.git
+cd Vinted-Gender-Classifier
 
 ### 2. Zainstaluj zależności
 pip install -r requirements.txt
