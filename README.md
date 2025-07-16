@@ -50,8 +50,8 @@ vinted-gender-classifier/
 
 ### 1. Clone the repository
 ```bash
-git clone https://github.com/your-username/vinted-gender-classifier.git
-cd vinted-gender-classifier
+git clone https://github.com/pevu97/Vinted-Gender-Classifier.git
+cd Vinted-Gender-Classifier
 ```
 
 ### 2. Install dependencies
