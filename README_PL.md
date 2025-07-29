@@ -1,111 +1,114 @@
-# 🧥 Vinted Gender Classifier
+# 👨‍💻 Job Posting Classifier API 👨‍💻
 
-Klasyfikator płci ogłoszenia z platformy Vinted na podstawie tytułu, opisu i tagów. Projekt typu end-to-end — zawiera cały cykl tworzenia rozwiązania ML na poziomie produkcyjnym, łącznie z wdrożeniem modelu jako REST API.
-
----
-
-## 📌 Cel projektu
-
-Stworzenie systemu ML, który automatycznie klasyfikuje ogłoszenia jako przeznaczone dla kobiet lub mężczyzn. Projekt może służyć jako baza do:
-
-- filtrowania ogłoszeń,
-- segmentacji użytkowników,
-- analizy trendów modowych.
+Projekt służy do klasyfikacji poziomu doświadczenia wymaganego w ogłoszeniu o pracę – `junior`, `mid` lub `senior`.
 
 ---
 
-## 🛠️ Stack technologiczny
+## 🔧 Struktura projektu
 
-| Komponent           | Technologia                                |
-|---------------------|---------------------------------------------|
-| Scraping danych     | `requests`, `BeautifulSoup`, `Selenium`     |
-| Preprocessing       | `pandas`, `scikit-learn`, `nltk`            |
-| Modelowanie         | `scikit-learn` (LogisticRegression, etc.)   |
-| Eksperymenty        | `MLflow`                                    |
-| Serializacja modeli | `joblib`                                    |
-| API predykcyjne     | `FastAPI`                                   |
-
----
-
-## 🗂️ Struktura projektu
-
-vinted-gender-classifier/
-├── data/                   # Surowe lub przetworzone dane
-├── notebooks/              # EDA, prototypy, eksperymenty
-├── src/                    # Logika aplikacji ML
-│   ├── scraper.py
-│   ├── preprocess.py
-│   ├── train.py
-│   ├── model_utils.py
-├── api/                    # REST API oparte na FastAPI
-│   └── main.py
-├── mlruns/                 # Folder wygenerowany przez MLflow
-├── requirements.txt
+```
+job_classifier/
+├── notebook/
+  └── notebook.ipynb  # Notebook do treningu modelu
+├── app/
+│   ├── main.py           # FastAPI – punkt wejścia do API
+│   ├── model_loader.py   # Ładowanie modelu i tokenizer'a
+│   ├── predictor.py      # Funkcja predykcji
+│   └── preprocess.py     # Czyszczenie i tokenizacja tekstu
+│   └── requirements.txt
+│   └── job_level_classifier.h5
 ├── README.md
-└── .gitignore
+```
 
 ---
 
-## ▶️ Jak uruchomić projekt lokalnie
+## 🚀 Technologies Used
 
-### 1. Klonuj repozytorium
-git clone https://github.com/pevu97/Vinted-Gender-Classifier.git
-cd Vinted-Gender-Classifier
+- Warstwa `Embedding`
+- Warstwa `Conv1D` z `filters=8`, `kernel_size=2`
+- `Dropout`
+- `GlobalMaxPooling1D`
+- `Dense + ReLU + Dropout`
+- `Dense + Softmax`
 
-### 2. Zainstaluj zależności
+Wytrenowany na ofertach pracy pobranych z portalu NoFluffJobs API (ok. 2000 ofert)
+---
+
+## 📊 Training
+
+W notebooku `training_notebook.ipynb`:
+
+- Tokenizacja
+- Padding
+- Podział na dane treningowe i testowe
+- Trening CNN
+- Zapisywanie modelu `.h5` oraz tokenizer `.pkl`
+- Logowanie parametrów za pomocą MLflow
+
+![Samples](https://kocotmeble.com/wp-content/uploads/2025/07/newplot-2.png)
+
+![Samples](https://kocotmeble.com/wp-content/uploads/2025/07/newplot-3.png)
+
+
+---
+
+## 🌐 API Endpoint
+
+Aby uruchomić serwer lokalnie:
+
+```bash
+uvicorn main:app --reload
+```
+
+Następnie przejdź do dokumentacji API:
+
+👉 http://127.0.0.1:8000/docs
+
+Endpoint `/predict` przyjmuje JSON:
+
+```json
+{
+  "text": "Treść oferty pracy do klasyfikacji..."
+}
+```
+
+Zwraca:
+
+```json
+{
+  "predicted_label": "mid"
+}
+```
+![Samples](https://kocotmeble.com/wp-content/uploads/2025/07/oferta.jpg)
+
+![Samples](https://kocotmeble.com/wp-content/uploads/2025/07/api1.jpg)
+
+![Samples](https://kocotmeble.com/wp-content/uploads/2025/07/api2.jpg)
+
+---
+
+## 🧪 MLOps
+
+Projekt wspiera:
+
+- MLflow – do logowania eksperymentów (parametry, metryki, artefakty)
+- Możliwość dalszej integracji z Dockerem i CI/CD
+
+
+---
+
+## 📦 Requirements
+
+Zainstaluj wszystkie biblioteki:
+
+```
 pip install -r requirements.txt
-
-### 3. Scraping danych (opcjonalnie)
-python src/scraper.py
-
-### 4. Trening modelu z MLflow
-python src/train.py
-mlflow ui
-
-Interfejs MLflow będzie dostępny pod adresem: http://localhost:5000
-
-### 5. Uruchomienie REST API
-uvicorn api.main:app --reload
-
-API będzie dostępne pod adresem: http://localhost:8000
+```
 
 ---
 
-## 📦 Przykładowe użycie API
+## ✅ Cel projektu
 
-### POST `/predict`
-{
-  "title": "Granatowa koszula męska slim fit",
-  "description": "Elegancka, idealna na spotkania biznesowe"
-}
-
-### Response:
-{
-  "prediction": "Męskie",
-  "confidence": 0.87
-}
-
----
-
-## 📊 Przykład wyników MLflow
-
-- Model: LogisticRegression
-- Accuracy: 87.4%
-- TF-IDF + tokenizacja
-- Dane: 2500 ogłoszeń z Vinted (równomiernie podzielone)
-
----
-
-## 🔬 Możliwe rozszerzenia
-
-- Klasyfikacja na więcej klas (np. dziecięce, unisex)
-- Wykorzystanie obrazów z ogłoszeń
-- Dodanie retrainingu z nowych danych
-- Hosting modelu online (Render, Hugging Face Spaces)
-- Docker + CI/CD
-
----
-
-## 📄 Licencja
-
-Projekt powstał wyłącznie w celach edukacyjno-portfolio. Nie jest powiązany z platformą Vinted.
+- dodanie testów jednostkowych
+- możliwość trenowania nowego modelu z poziomu API
+- logowanie predykcji
