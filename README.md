@@ -1,125 +1,107 @@
-# 🧥 Vinted Gender Classifier
+# Job Posting Classifier API
 
-A machine learning project that classifies Vinted listings as either "male" or "female"-oriented based on their title, description, and tags. This is a full end-to-end ML pipeline designed to demonstrate commercial-level engineering skills — from data collection and training to deployment via REST API.
-
----
-
-## 📌 Project Objective
-
-Build an ML system that automatically determines whether a listing on Vinted is targeted at women or men. Potential use cases include:
-
-- Automated content tagging,
-- User segmentation,
-- Fashion trend analysis.
+This project is a complete pipeline for classifying job offers into three experience levels: **Junior**, **Mid**, and **Senior**. It uses a Convolutional Neural Network (CNN) trained on job listings from the NoFluffJobs platform. The model is deployed via a FastAPI interface and includes elements of MLOps with MLflow.
 
 ---
 
-## 🛠️ Tech Stack
+## 🔧 Project Structure
 
-| Component              | Technology                                  |
-|------------------------|----------------------------------------------|
-| Data Scraping          | `requests`, `BeautifulSoup`, `Selenium`      |
-| Preprocessing          | `pandas`, `scikit-learn`, `nltk`             |
-| Modeling               | `scikit-learn` (LogisticRegression, etc.)    |
-| Experiment Tracking    | `MLflow`                                     |
-| Model Serialization    | `joblib`                                     |
-| API Deployment         | `FastAPI`                                    |
-
----
-
-## 🗂️ Project Structure
-
-vinted-gender-classifier/
-├── data/                   # Raw or preprocessed data  
-├── notebooks/              # EDA, experiments  
-├── src/                    # Core ML logic  
-│   ├── scraper.py  
-│   ├── preprocess.py  
-│   ├── train.py  
-│   ├── model_utils.py  
-├── api/                    # FastAPI prediction endpoint  
-│   └── main.py  
-├── mlruns/                 # MLflow logging directory  
-├── requirements.txt  
-├── README.md  
-└── .gitignore  
-
----
-
-## ▶️ How to Run Locally
-
-### 1. Clone the repository
-```bash
-git clone https://github.com/pevu97/Vinted-Gender-Classifier.git
-cd Vinted-Gender-Classifier
+```
+job_classifier/
+├── notebook/
+  └── notebook.ipynb  # Notebook for training the model and logging with MLflow
+├── app/
+│   ├── main.py           # FastAPI endpoint
+│   ├── model_loader.py   # Loads model and tokenizer
+│   ├── predictor.py      # Prediction logic
+│   └── preprocess.py     # Text preprocessing (cleaning, tokenization, padding)
+│   └── requirements.txt
+│   └── job_level_classifier.h5
+├── README.md
 ```
 
-### 2. Install dependencies
-```bash
+---
+
+## 🚀 Technologies Used
+
+- TensorFlow / Keras (CNN model)
+- FastAPI (API interface)
+- MLflow (MLOps - model tracking & logging)
+- BeautifulSoup, re (text cleaning)
+- Tokenizer & Padding
+- Anaconda environment
+- Swagger UI for interaction with the API
+
+---
+
+## 📊 Training
+
+The model was trained using text from real job listings, with the following architecture:
+
+- **Embedding Layer**: output_dim=100
+- **Conv1D Layer**: filters=8, kernel_size=2, ReLU
+- **Global Max Pooling**
+- **Dense Layer**: 16 units + L2 regularization + dropout
+- **Output Layer**: 3 units (softmax)
+
+![Samples](https://kocotmeble.com/wp-content/uploads/2025/07/newplot-2.png)
+
+![Samples](https://kocotmeble.com/wp-content/uploads/2025/07/newplot-3.png)
+
+
+---
+
+## 🌐 API Endpoint
+
+Run the API:
+
+```
+uvicorn main:app --reload
+```
+
+Then open [http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs)
+
+### Example request:
+
+```json
+POST /predict
+{
+  "text": "We are looking for a software engineer..."
+}
+```
+![Samples](https://kocotmeble.com/wp-content/uploads/2025/07/oferta.jpg)
+
+![Samples](https://kocotmeble.com/wp-content/uploads/2025/07/api1.jpg)
+
+![Samples](https://kocotmeble.com/wp-content/uploads/2025/07/api2.jpg)
+
+---
+
+## 🧪 MLOps with MLflow
+
+The project uses MLflow to track:
+
+- Model architecture and parameters
+- Accuracy / loss metrics
+- Artifacts (e.g., trained model file)
+
+
+---
+
+## 📦 Requirements
+
+Install all dependencies with:
+
+```
 pip install -r requirements.txt
 ```
 
-### 3. (Optional) Scrape data
-```bash
-python src/scraper.py
-```
-
-### 4. Train model with MLflow
-```bash
-python src/train.py
-mlflow ui
-```
-
-MLflow dashboard will be available at: http://localhost:5000
-
-### 5. Start prediction API
-```bash
-uvicorn api.main:app --reload
-```
-
-API will be accessible at: http://localhost:8000
-
 ---
 
-## 📦 Example API Usage
+## ✅ Project Goals
 
-### POST `/predict`
-```json
-{
-  "title": "Navy slim-fit men's shirt",
-  "description": "Elegant, perfect for business meetings"
-}
-```
-
-### Response:
-```json
-{
-  "prediction": "Male",
-  "confidence": 0.87
-}
-```
-
----
-
-## 📊 Example MLflow Results
-
-- Model: LogisticRegression  
-- Accuracy: 87.4%  
-- Features: TF-IDF + tokenization  
-- Dataset: 2500 listings (balanced male/female)  
-
----
-
-## 🔬 Possible Extensions
-
-- Multi-class classification (e.g. kids, unisex)
-- Add image-based model
-- Automated retraining on new listings
-- Online deployment (Render, Hugging Face Spaces)
-- Docker + CI/CD integration
-
----
-
-## 📄 License
-
-This project is for educational and portfolio purposes only. It is not affiliated with or endorsed by Vinted.
+This project was created as a **portfolio piece** to showcase:
+- End-to-end ML project skills
+- Text classification
+- FastAPI deployment
+- Basic MLOps integration
