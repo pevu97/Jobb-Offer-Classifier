@@ -1,4 +1,4 @@
-# Job Posting Classifier API
+# 👨‍💻 Job Posting Classifier API 👨‍💻
 
 This project is a complete pipeline for classifying job offers into three experience levels: **Junior**, **Mid**, and **Senior**. It uses a Convolutional Neural Network (CNN) trained on job listings from the NoFluffJobs platform. The model is deployed via a FastAPI interface and includes elements of MLOps with MLflow.
 
