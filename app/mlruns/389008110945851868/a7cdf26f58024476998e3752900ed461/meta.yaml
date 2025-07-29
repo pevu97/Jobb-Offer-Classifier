@@ -1,0 +1,14 @@
+artifact_uri: file:///C:/Users/patry/galaxy/mlruns/389008110945851868/a7cdf26f58024476998e3752900ed461/artifacts
+end_time: 1753785230024
+entry_point_name: ''
+experiment_id: '389008110945851868'
+lifecycle_stage: active
+run_id: a7cdf26f58024476998e3752900ed461
+run_name: sincere-sloth-96
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1753785222174
+status: 3
+tags: []
+user_id: patry

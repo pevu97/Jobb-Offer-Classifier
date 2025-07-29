@@ -1,0 +1,14 @@
+artifact_uri: file:///C:/Users/patry/galaxy/mlruns/389008110945851868/2ae539f934d944daa54002ac74428571/artifacts
+end_time: 1753784635684
+entry_point_name: ''
+experiment_id: '389008110945851868'
+lifecycle_stage: active
+run_id: 2ae539f934d944daa54002ac74428571
+run_name: efficient-sow-784
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1753784626983
+status: 3
+tags: []
+user_id: patry

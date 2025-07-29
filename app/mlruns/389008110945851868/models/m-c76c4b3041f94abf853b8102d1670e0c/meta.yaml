@@ -1,0 +1,10 @@
+artifact_location: file:///C:/Users/patry/galaxy/mlruns/389008110945851868/models/m-c76c4b3041f94abf853b8102d1670e0c/artifacts
+creation_timestamp: 1753784627292
+experiment_id: '389008110945851868'
+last_updated_timestamp: 1753784635649
+model_id: m-c76c4b3041f94abf853b8102d1670e0c
+model_type: null
+name: model
+source_run_id: 2ae539f934d944daa54002ac74428571
+status: 2
+status_message: null

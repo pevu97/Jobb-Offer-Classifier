@@ -1,0 +1,6 @@
+artifact_location: file:///C:/Users/patry/galaxy/mlruns/389008110945851868
+creation_time: 1753784626322
+experiment_id: '389008110945851868'
+last_update_time: 1753784626322
+lifecycle_stage: active
+name: demo-mlflow
